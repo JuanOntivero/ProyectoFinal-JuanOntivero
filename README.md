@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+Proyecto Final: Tienda Virtual en React
+Descripción general
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esta aplicación simula una tienda de e-commerce utilizando React. Permite a los usuarios visualizar un catálogo de productos, filtrar por categorías, agregar productos al carrito, gestionar las cantidades y finalizar la compra, almacenando los datos en Firebase Firestore.
 
-## Available Scripts
 
-In the project directory, you can run:
+Tecnologías utilizadas
 
-### `npm start`
+- React 18
+- React Router DOM
+- Context API
+- Firebase Firestore
+- React Toastify
+- CSS personalizado
+- FontAwesome para íconos
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Funcionamiento general
 
-### `npm test`
+- Los productos son cargados dinámicamente desde Firebase Firestore.
+- Las imágenes se cargan desde URLs públicas (Dropbox u otras).
+- Los usuarios pueden agregar productos al carrito desde la misma tarjeta.
+- El carrito es visible permanentemente al costado derecho.
+- Desde el carrito pueden eliminar productos, vaciar todo o confirmar la compra.
+- Al confirmar la compra, se genera una orden en la colección 'orders' de Firestore y se muestra un número de orden único mediante un toast.
+- Se utilizan renderizados condicionales para mejorar la experiencia: carga de productos, carrito vacío, producto sin stock.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+Estructura de carpetas y archivos
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+src/
+ ┣ components/
+ ┃ ┣ Item.js → Tarjeta de producto individual.
+ ┃ ┣ ItemList.js → Lista de productos.
+ ┃ ┣ ItemCount.js → Contador de unidades para agregar al carrito.
+ ┃ ┣ CartWidget.js → Ícono de carrito en la navegación.
+ ┃ ┣ AdminLoader.js → (opcional) Cargar productos a Firestore rápidamente.
+ ┣ containers/
+ ┃ ┣ ItemListContainer.js → Contenedor principal para el listado de productos.
+ ┃ ┣ ItemDetailContainer.js → Contenedor para mostrar detalles de producto (usado adaptado en tarjetas).
+ ┃ ┣ Cart.js → Vista fija del carrito de compras.
+ ┃ ┣ CheckoutForm.js → Formulario de finalización de compra (opcional según implementación).
+ ┣ context/
+ ┃ ┣ CartContext.js → Manejo global del estado del carrito de compras.
+ ┣ firebase/
+ ┃ ┣ config.js → Configuración de Firebase y conexión a Firestore.
+ ┣ routes/
+ ┃ ┣ NotFound.js → (opcional) Página para rutas inválidas.
+ ┣ styles/
+ ┃ ┣ styles.css → Estilos globales de la aplicación.
+ ┣ App.js → Enrutamiento principal, contenedor de navegación, carrito y rutas.
+ ┣ index.js → Archivo de entrada de React.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Detalle de componentes principales
+NavBar.js
+Componente de navegación principal que permite acceder a las distintas categorías de productos y visualizar el acceso al carrito.
+ItemListContainer.js
+Contenedor que carga y renderiza productos desde Firestore, pudiendo filtrar por categoría si corresponde.
+Item.js
+Tarjeta de producto que muestra imagen, nombre, precio y permite ver más detalles. Integra el ItemCount para agregar cantidades.
+ItemCount.js
+Contador que permite seleccionar la cantidad de unidades para agregar al carrito, respetando stock mínimo y máximo.
+Cart.js
+Contenedor lateral fijo que muestra los productos agregados al carrito, con opción a eliminar, vaciar o finalizar la compra.
+CartContext.js
+Contexto global que maneja la lógica del carrito, agregados, eliminaciones, limpieza del carrito y cálculo de totales.
+CheckoutForm.js (opcional)
+Formulario de finalización de compra para capturar datos del comprador. En esta implementación básica, se genera automáticamente una orden demo.
+AdminLoader.js (opcional)
+Componente auxiliar para carga rápida de múltiples productos en Firestore en modo desarrollo.
+Notas importantes
 
-### `npm run eject`
+- Firestore crea la colección 'orders' automáticamente al confirmar una compra.
+- La generación de toasts de confirmación mejora la experiencia del usuario en cada acción relevante (agregar al carrito, finalizar compra).
+- Se utilizaron buenas prácticas de separación de lógica y presentación en todos los componentes.
+- Se respeta el modelo SPA (Single Page Application) sin recargas de navegador.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Autor
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Juan Ontivero
+Juanontivero1999@gmail.com
+https://proyecto-final-juan-ontivero.vercel.app

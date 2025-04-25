@@ -177,7 +177,7 @@ button:hover {
 }
 .main-layout {
   padding: 20px;
-  margin-right: 270px; /* deja espacio para el carrito */
+  margin-right: 270px; 
 }
 .product-image {
   width: 100%;
